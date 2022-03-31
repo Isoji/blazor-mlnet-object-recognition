@@ -17,7 +17,7 @@ namespace ObjectRecogntionWebApp.Model
     }
 
     /// <summary>
-    /// Stores the coordinates for a bounding box
+    /// Stores the coordinates of a bounding box
     /// </summary>
     public class Box
     {
@@ -34,5 +34,15 @@ namespace ObjectRecogntionWebApp.Model
             Ymax = ymax;
 
         }
+    }
+
+    /// <summary>
+    /// Stores information about a detection
+    /// </summary>
+    public class Detection
+    {
+        public Box Box { get; set; }
+        public string Label { get; set; }
+        public float Confidence { get; set; }
     }
 }
