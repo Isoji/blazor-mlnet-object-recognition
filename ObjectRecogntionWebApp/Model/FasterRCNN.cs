@@ -65,6 +65,32 @@ namespace ObjectRecogntionWebApp.Model
             return detections;
         }
 
+        private void DrawDetections(Image image, List<Detection> detections)
+        {
+            Font font = SystemFonts.CreateFont("Arial", 16);
+
+            foreach (var d in detections) {
+                image.Mutate(x =>
+                {
+                    x.DrawLines(Color.Red, 2f, new PointF[]
+                    {
+                        new PointF(d.Box.Xmin, d.Box.Ymin),
+                        new PointF(d.Box.Xmax, d.Box.Ymin),
+
+                        new PointF(d.Box.Xmax, d.Box.Ymin),
+                        new PointF(d.Box.Xmax, d.Box.Ymax),
+
+                        new PointF(d.Box.Xmax, d.Box.Ymax),
+                        new PointF(d.Box.Xmin, d.Box.Ymax),
+
+                        new PointF(d.Box.Xmin, d.Box.Ymax),
+                        new PointF(d.Box.Xmin, d.Box.Ymin)
+                    });
+                    x.DrawText($"{d.Label}, {d.Score:0.00}", font, Color.White, new PointF(d.Box.Xmin, d.Box.Ymin));
+                });
+            }
+        }
+
         /// <summary>
         /// Pre processes an image into the proper format for inference with Faster RCNN models.
         /// </summary>
@@ -73,6 +99,7 @@ namespace ObjectRecogntionWebApp.Model
         private Tensor<float> PreProcessImage(Image<Bgr24> image)
         {
             var clonedImage = image.Clone();
+
             // Resize image
             float ratio = 800f / Math.Min(clonedImage.Width, clonedImage.Height);
             clonedImage.Mutate(x => x.Resize((int)(ratio * clonedImage.Width), (int)(ratio * clonedImage.Height)));
