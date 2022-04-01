@@ -27,10 +27,10 @@ namespace ObjectRecogntionWebApp.Model
         public List<Detection> DetectObjects(string imageUrl, HashSet<string> classes, float scoreThreshold)
         {
             // Setup input
-            Image image = Image.Load(imageUrl);
+            Image<Bgr24> image = Image.Load<Bgr24>(imageUrl);
             var input = new List<NamedOnnxValue>
             {
-                NamedOnnxValue.CreateFromTensor("image", PreProcessImage((Image<Bgr24>)image))
+                NamedOnnxValue.CreateFromTensor("image", PreProcessImage(image))
             };
 
             // Run inference
