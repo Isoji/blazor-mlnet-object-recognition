@@ -1,4 +1,4 @@
-﻿namespace Microsoft.ML.OnnxRuntime.ObjectDetectionFasterRCNN
+﻿namespace ObjectRecogntionWebApp.Model
 {
     public class LabelMap
     {
@@ -82,6 +82,7 @@
                                                         "scissors",
                                                         "teddy bear",
                                                         "hair drier",
-                                                        "toothbrush"};
+                                                        "toothbrush"
+        };
     }
 }

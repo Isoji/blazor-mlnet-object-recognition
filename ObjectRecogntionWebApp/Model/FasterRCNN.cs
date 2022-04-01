@@ -23,7 +23,8 @@ namespace ObjectRecogntionWebApp.Model
         /// <param name="imageUrl">The URL of the image that is to be used for inference</param>
         /// <param name="classes">A Set of class labels that will be returned as detections</param>
         /// <param name="scoreThreshold">A float threshold value to base detections on</param>
-        public void DetectObjects(string imageUrl, HashSet<string> classes, float scoreThreshold)
+        /// <returns>A list of detection objects</returns>
+        public List<Detection> DetectObjects(string imageUrl, HashSet<string> classes, float scoreThreshold)
         {
             // Setup input
             var input = new List<NamedOnnxValue>
@@ -39,8 +40,29 @@ namespace ObjectRecogntionWebApp.Model
             float[] boxes = resultsArray[0].AsEnumerable<float>().ToArray();
             long[] labels = resultsArray[1].AsEnumerable<long>().ToArray();
             float[] scores = resultsArray[2].AsEnumerable<float>().ToArray();
-            var predictions = new List<Detection>();
+            var detections = new List<Detection>();
             var minScore = scoreThreshold;
+
+            // Iterating by 4 because every box has 4 sequenced float values (xmin, ymin, xmax, ymax)
+            for (int i = 0; i < boxes.Length - 4; i += 4)
+            {
+                // Divide by 4 to get appropriate bounding box index
+                var index = i / 4;
+                string label = LabelMap.Labels[labels[index]];
+
+                if (classes.Contains(label) && (scores[index] >= minScore))
+                {
+                    // Passed the accepted confidence threshold, add to Prediction list
+                    detections.Add(new Detection
+                    {
+                        Box = new Box(boxes[i], boxes[i + 1], boxes[i + 2], boxes[i + 3]),
+                        Label = label,
+                        Score = scores[index]
+                    });
+
+                }
+            }
+            return detections;
         }
 
         /// <summary>
@@ -107,6 +129,6 @@ namespace ObjectRecogntionWebApp.Model
     {
         public Box Box { get; set; }
         public string Label { get; set; }
-        public float Confidence { get; set; }
+        public float Score { get; set; }
     }
 }
