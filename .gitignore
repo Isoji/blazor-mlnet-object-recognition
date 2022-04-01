@@ -453,3 +453,4 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 /ObjectRecogntionWebApp/wwwroot/uploads
+/ObjectRecogntionWebApp/wwwroot/outputs
