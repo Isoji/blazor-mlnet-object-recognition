@@ -60,15 +60,20 @@
 
     private async void HandleDetection()
     {
-        List<Image> outputs = new();
+        List<MemoryStream> outputImages = new();
+
         if (loadedFilePaths.Count == 3)
         {
             ObjectRecogntionWebApp.Model.FasterRCNN detector = new Model.FasterRCNN();
 
             foreach (var filePath in loadedFilePaths)
             {
-                Image result = detector.DetectObjects(filePath, new HashSet<string>{"person"}, 0.7f);
-                outputs.Add(result);
+                var result = detector.DetectObjects(filePath, new HashSet<string>{"person"}, 0.7f);
+                //outputs.Add(result);
+
+                var tmp = new MemoryStream();
+                result.SaveAsJpeg(tmp);
+                outputImages.Add(tmp);
             }
         }
         else
