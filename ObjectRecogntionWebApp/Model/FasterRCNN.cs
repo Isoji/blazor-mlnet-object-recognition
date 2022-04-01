@@ -16,16 +16,28 @@ namespace ObjectRecogntionWebApp.Model
         {
             Session = new InferenceSession("/wwwroot/onnx/FasterRCNN-10.onnx");
         }
-        public void DetectObjects(string imageUrl, HashSet<string> labels, float confidence)
-        {
-            Image image = Image<Bgr24>.Load(imageUrl);
-        }
-
 
         /// <summary>
-        /// Pre processes an image into the proper format for inference with Faster RCNN models
+        /// Performs object detection on an image.
         /// </summary>
-        /// <param name="image"></param>
+        /// <param name="imageUrl">The URL of the image that is to be used for inference</param>
+        /// <param name="labels">A Set of class labels that will be returned as detections</param>
+        /// <param name="confidence">A float threshold value to base detections on</param>
+        public void DetectObjects(string imageUrl, HashSet<string> labels, float confidence)
+        {
+            // Setup input
+            var input = new List<NamedOnnxValue>
+            {
+                NamedOnnxValue.CreateFromTensor("image", PreProcessImage(Image.Load<Bgr24>(imageUrl)))
+            };
+
+            var results = Session.Run(input);
+        }
+
+        /// <summary>
+        /// Pre processes an image into the proper format for inference with Faster RCNN models.
+        /// </summary>
+        /// <param name="image">Image object to pre process</param>
         /// <returns>Processed image tensor object</returns>
         private Tensor<float> PreProcessImage(Image<Bgr24> image)
         {
