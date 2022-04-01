@@ -23,8 +23,6 @@
 
 @code{
     private List<string> loadedFilePaths = new();
-    //private long maxFileSize = 1024 * 15;
-    private int maxAllowedFiles = 3;
     private bool isLoading;
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
@@ -62,13 +60,15 @@
 
     private async void HandleDetection()
     {
+        List<Image> outputs = new();
         if (loadedFilePaths.Count == 3)
         {
             ObjectRecogntionWebApp.Model.FasterRCNN detector = new Model.FasterRCNN();
 
             foreach (var filePath in loadedFilePaths)
             {
-                detector.DetectObjects(filePath, new HashSet<string>{"person"}, 0.7f);
+                Image result = detector.DetectObjects(filePath, new HashSet<string>{"person"}, 0.7f);
+                outputs.Add(result);
             }
         }
         else
