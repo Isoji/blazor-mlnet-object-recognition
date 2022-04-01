@@ -2,7 +2,7 @@
 @using System.Diagnostics
 @inject IWebHostEnvironment Environment
 @inject ILogger<Index> Logger
-@inject IJSRuntime JSRuntime;
+@inject IJSRuntime JsRuntime;
 
 <PageTitle>Index</PageTitle>
 <body class="text-center">
@@ -60,7 +60,7 @@
         }
     }
 
-    private void HandleDetection()
+    private async void HandleDetection()
     {
         if (loadedFilePaths.Count == 3)
         {
@@ -68,8 +68,12 @@
 
             foreach (var filePath in loadedFilePaths)
             {
-                //detector.DetectObjects(filePath);
+                detector.DetectObjects(filePath, new HashSet<string>{"person"}, 0.7f);
             }
+        }
+        else
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "You must upload 3 images.");
         }
     }
 }

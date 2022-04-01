@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\NewFolder\" />
     <Folder Include="wwwroot\outputs\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
