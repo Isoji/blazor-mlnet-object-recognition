@@ -2,6 +2,6 @@
 {
     public interface IDetector 
     {
-        public List<Detection> DetectObjects(string imageUrl, HashSet<string> labels, float confidence);
+        public void DetectObjects(string imageUrl, HashSet<string> labels, float confidence);
     }
 }

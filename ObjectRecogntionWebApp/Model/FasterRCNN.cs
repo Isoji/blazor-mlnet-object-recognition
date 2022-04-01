@@ -24,7 +24,7 @@ namespace ObjectRecogntionWebApp.Model
         /// <param name="classes">A Set of class labels that will be returned as detections</param>
         /// <param name="scoreThreshold">A float threshold value to base detections on</param>
         /// <returns>A list of detection objects</returns>
-        public List<Detection> DetectObjects(string imageUrl, HashSet<string> classes, float scoreThreshold)
+        public void DetectObjects(string imageUrl, HashSet<string> classes, float scoreThreshold)
         {
             // Setup input
             Image<Bgr24> image = Image.Load<Bgr24>(imageUrl);
@@ -63,12 +63,11 @@ namespace ObjectRecogntionWebApp.Model
 
                 }
             }
-            return detections;
         }
 
         public void DrawDetections(Image image, List<Detection> detections, string outputName)
         {
-            using var output = File.OpenWrite("C:/Users/tremb/source/repos/ObjectRecogntionWebApp/ObjectRecogntionWebApp/wwwroot/outputs/" + outputName);
+            using var output = File.OpenWrite("C:/Users/tremb/source/repos/ObjectRecogntionWebApp/ObjectRecogntionWebApp/wwwroot/outputs/" + outputName + ".jpg");
             Font font = SystemFonts.CreateFont("Arial", 16);
 
             foreach (var d in detections) {
