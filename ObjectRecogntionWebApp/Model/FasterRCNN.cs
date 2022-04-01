@@ -64,12 +64,18 @@ namespace ObjectRecogntionWebApp.Model
                 }
             }
             string fileName = imageUrl.Split('\\').Last();
-            DrawDetections(image, detections, fileName);
+            DrawDetections(image, detections);
         }
 
-        public void DrawDetections(Image image, List<Detection> detections, string outputName)
+        /// <summary>
+        /// Uses detection data to draw over an image for output visualization
+        /// </summary>
+        /// <param name="image">The image that went through detection</param>
+        /// <param name="detections">The detections that were inferred from the image</param>
+        /// <returns></returns>
+        public Image DrawDetections(Image image, List<Detection> detections)
         {
-            using var output = File.OpenWrite("C:/Users/tremb/source/repos/ObjectRecogntionWebApp/ObjectRecogntionWebApp/wwwroot/outputs/" + outputName);
+            //using var output = File.OpenWrite("C:/Users/tremb/source/repos/ObjectRecogntionWebApp/ObjectRecogntionWebApp/wwwroot/outputs/" + outputName);
             Font font = SystemFonts.CreateFont("Arial", 16);
 
             foreach (var d in detections) 
@@ -93,7 +99,8 @@ namespace ObjectRecogntionWebApp.Model
                     x.DrawText($"{d.Label}, {d.Score:0.00}", font, Color.Red, new PointF(d.Box.Xmin, d.Box.Ymin));
                 });
             }
-            image.SaveAsJpeg(output);
+            //image.SaveAsJpeg(output);
+            return image;
         }
 
         /// <summary>
