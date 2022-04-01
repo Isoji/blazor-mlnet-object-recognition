@@ -14,7 +14,7 @@ namespace ObjectRecogntionWebApp.Model
 
         public FasterRCNN()
         {
-            Session = new InferenceSession("/wwwroot/onnx/FasterRCNN-10.onnx");
+            Session = new InferenceSession("C:/Users/tremb/source/repos/ObjectRecogntionWebApp/ObjectRecogntionWebApp/wwwroot/onnx/FasterRCNN-10.onnx");
         }
 
         /// <summary>
