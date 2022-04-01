@@ -21,9 +21,9 @@ namespace ObjectRecogntionWebApp.Model
         /// Performs object detection on an image.
         /// </summary>
         /// <param name="imageUrl">The URL of the image that is to be used for inference</param>
-        /// <param name="labels">A Set of class labels that will be returned as detections</param>
-        /// <param name="confidence">A float threshold value to base detections on</param>
-        public void DetectObjects(string imageUrl, HashSet<string> labels, float confidence)
+        /// <param name="classes">A Set of class labels that will be returned as detections</param>
+        /// <param name="scoreThreshold">A float threshold value to base detections on</param>
+        public void DetectObjects(string imageUrl, HashSet<string> classes, float scoreThreshold)
         {
             // Setup input
             var input = new List<NamedOnnxValue>
@@ -31,7 +31,16 @@ namespace ObjectRecogntionWebApp.Model
                 NamedOnnxValue.CreateFromTensor("image", PreProcessImage(Image.Load<Bgr24>(imageUrl)))
             };
 
+            // Run inference
             var results = Session.Run(input);
+
+            // Post process results
+            var resultsArray = results.ToArray();
+            float[] boxes = resultsArray[0].AsEnumerable<float>().ToArray();
+            long[] labels = resultsArray[1].AsEnumerable<long>().ToArray();
+            float[] scores = resultsArray[2].AsEnumerable<float>().ToArray();
+            var predictions = new List<Detection>();
+            var minScore = scoreThreshold;
         }
 
         /// <summary>
