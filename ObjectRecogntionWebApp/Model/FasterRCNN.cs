@@ -24,7 +24,7 @@ namespace ObjectRecogntionWebApp.Model
         /// <param name="classes">A Set of class labels that will be returned as detections</param>
         /// <param name="scoreThreshold">A float threshold value to base detections on</param>
         /// <returns>A list of detection objects</returns>
-        public void DetectObjects(string imageUrl, HashSet<string> classes, float scoreThreshold)
+        public Image DetectObjects(string imageUrl, HashSet<string> classes, float scoreThreshold)
         {
             // Setup input
             Image<Bgr24> image = Image.Load<Bgr24>(imageUrl);
@@ -63,8 +63,8 @@ namespace ObjectRecogntionWebApp.Model
 
                 }
             }
-            string fileName = imageUrl.Split('\\').Last();
-            DrawDetections(image, detections);
+            //string fileName = imageUrl.Split('\\').Last();
+            return DrawDetections(image, detections);
         }
 
         /// <summary>
