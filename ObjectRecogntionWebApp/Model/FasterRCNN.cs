@@ -63,6 +63,7 @@ namespace ObjectRecogntionWebApp.Model
 
                 }
             }
+            DrawDetections(image, detections, "output_test");
         }
 
         public void DrawDetections(Image image, List<Detection> detections, string outputName)
