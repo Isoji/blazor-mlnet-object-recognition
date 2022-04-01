@@ -1,11 +1,65 @@
 ﻿@page "/"
+@using System.Diagnostics
+@inject IWebHostEnvironment Environment
+@inject ILogger<Index> Logger
+@inject IJSRuntime JSRuntime;
 
 <PageTitle>Index</PageTitle>
 <body class="text-center">
     <form class="form-index">
         <img class="text-center" src="MLNET_logo.png" alt="" width="250">
         <h1 class="h3 mb-3 font-weight-normal text-center">Upload a Netwatch Image Sequence</h1><br/>
-        <input class="mb-3 form-control-file" name="file" accept="image/png, image/jpg, image/jpeg" id="inputfile" type="file" multiple/><br/>
-        <button class="btn btn-primary btn-lg w-100" type="submit">Detect</button>
+
+        <div>
+            <InputFile class="mb-3 form-control-file" name="file" accept="image/png, image/jpg, image/jpeg" id="inputfile" type="file"  OnChange="@LoadFiles" multiple/>
+        </div>
+        <div>
+            <button class="btn btn-primary btn-lg w-100" type="submit">Detect</button>
+        </div>
     </form>
+    @if (isLoading)
+    {
+        <p>Uploading...</p>
+    }
 </body>
+
+@code{
+    private List<IBrowserFile> loadedFiles = new();
+    //private long maxFileSize = 1024 * 15;
+    private int maxAllowedFiles = 3;
+    private bool isLoading;
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        isLoading = true;
+        if (e.FileCount != 3)
+        {
+            Debug.WriteLine("exactly 3 files are required.");
+            loadedFiles.Clear();
+            isLoading = false;
+        }
+        else
+        {
+            foreach (var file in e.GetMultipleFiles())
+            {
+                try
+                {
+                    loadedFiles.Add(file);
+
+                    //var trustedFileNameForFileStorage = Path.GetRandomFileName();
+                    var path = Path.Combine(Environment.ContentRootPath, "wwwroot/uploads",
+                            file.Name);
+
+                    await using FileStream fs = new(path, FileMode.Create);
+                    await file.OpenReadStream().CopyToAsync(fs);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError("File: {Filename} Error: {Error}", 
+                        file.Name, ex.Message);
+                }
+            }
+            isLoading = false;
+        }
+    }
+}
