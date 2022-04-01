@@ -65,8 +65,9 @@ namespace ObjectRecogntionWebApp.Model
             return detections;
         }
 
-        private void DrawDetections(Image image, List<Detection> detections)
+        private void DrawDetections(Image image, List<Detection> detections, string outputName)
         {
+            using var output = File.OpenWrite("C:/Users/tremb/source/repos/ObjectRecogntionWebApp/ObjectRecogntionWebApp/wwwroot/outputs/" + outputName);
             Font font = SystemFonts.CreateFont("Arial", 16);
 
             foreach (var d in detections) {
@@ -89,6 +90,7 @@ namespace ObjectRecogntionWebApp.Model
                     x.DrawText($"{d.Label}, {d.Score:0.00}", font, Color.White, new PointF(d.Box.Xmin, d.Box.Ymin));
                 });
             }
+            image.SaveAsJpeg(output);
         }
 
         /// <summary>
