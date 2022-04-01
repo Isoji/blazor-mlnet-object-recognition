@@ -27,9 +27,10 @@ namespace ObjectRecogntionWebApp.Model
         public List<Detection> DetectObjects(string imageUrl, HashSet<string> classes, float scoreThreshold)
         {
             // Setup input
+            Image image = Image.Load(imageUrl);
             var input = new List<NamedOnnxValue>
             {
-                NamedOnnxValue.CreateFromTensor("image", PreProcessImage(Image.Load<Bgr24>(imageUrl)))
+                NamedOnnxValue.CreateFromTensor("image", PreProcessImage((Image<Bgr24>)image))
             };
 
             // Run inference
@@ -65,7 +66,7 @@ namespace ObjectRecogntionWebApp.Model
             return detections;
         }
 
-        private void DrawDetections(Image image, List<Detection> detections, string outputName)
+        public void DrawDetections(Image image, List<Detection> detections, string outputName)
         {
             using var output = File.OpenWrite("C:/Users/tremb/source/repos/ObjectRecogntionWebApp/ObjectRecogntionWebApp/wwwroot/outputs/" + outputName);
             Font font = SystemFonts.CreateFont("Arial", 16);
