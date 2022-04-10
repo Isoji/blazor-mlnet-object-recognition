@@ -24,10 +24,12 @@ namespace ObjectRecogntionWebApp.Model
         /// <param name="classes">The HashSet containing class labels for detection filtering.</param>
         /// <param name="threshold">The score threshold used for detection filtering.</param>
         /// <returns>The output Image</returns>
-        public List<Detection> DetectObjects(string path, HashSet<string> classes, float threshold)
+        public List<Detection> DetectObjects(string imagePath, HashSet<string> classes, float threshold)
         {
+            // Load image from path
+            Image<Bgr24> image = Image.Load<Bgr24>(imagePath);
+
             // Setup input
-            Image<Bgr24> image = Image.Load<Bgr24>(path);
             var input = new List<NamedOnnxValue>
             {
                 NamedOnnxValue.CreateFromTensor("image", PreProcessImage(image))
@@ -71,8 +73,11 @@ namespace ObjectRecogntionWebApp.Model
         /// <param name="image">The image that went through detection</param>
         /// <param name="detections">The detections that were inferred from the image</param>
         /// <returns></returns>
-        public Image DrawDetections(Image image, List<Detection> detections)
+        public Image DrawDetections(string imagePath, List<Detection> detections)
         {
+            // Load image from path
+            Image<Bgr24> image = Image.Load<Bgr24>(imagePath);
+
             // Set the font for text to be drawn on image
             Font font = SystemFonts.CreateFont("Arial", 13);
 
