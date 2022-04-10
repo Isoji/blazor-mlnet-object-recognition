@@ -76,7 +76,7 @@ namespace ObjectRecogntionWebApp.Model
         public Image DrawDetections(Image image, List<Detection> detections)
         {
             // Set the font for text to be drawn on image
-            Font font = SystemFonts.CreateFont("Arial", 16);
+            Font font = SystemFonts.CreateFont("Arial", 13);
 
             // Get the ratio for resizing boxes to original image
             float ratio = 800f / Math.Min(image.Width, image.Height);
@@ -108,7 +108,7 @@ namespace ObjectRecogntionWebApp.Model
                         new PointF(d.Box.Xmin, d.Box.Ymin)
                     }); 
                     // Draw the class label and accuracy score over the image
-                    x.DrawText($"{d.Label}, {d.Score:0.00}", font, Color.Red, new PointF(d.Box.Xmin, d.Box.Ymin));
+                    x.DrawText($"{d.Label}, {d.Score:0.00}", font, Color.White, new PointF(d.Box.Xmin, d.Box.Ymin - 15));
                 });
             }
             return image;
