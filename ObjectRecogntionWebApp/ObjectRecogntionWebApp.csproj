@@ -19,9 +19,4 @@
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta14" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\outputs\" />
-    <Folder Include="wwwroot\uploads\" />
-  </ItemGroup>
-
 </Project>

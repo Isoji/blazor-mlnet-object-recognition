@@ -33,10 +33,29 @@
             Debug.WriteLine("exactly 3 files are required.");
             loadedFilePaths.Clear();
         }
-        // File count is equal to 3
         else
         {
-            // For each file uploaded, convert them into a file stream
+            // Set the target upload directory path
+            String uploadPath = @$"{currPath}\wwwroot\uploads";
+            DirectoryInfo di = new DirectoryInfo(uploadPath);
+
+            // Handle the upload directory
+            if (di.Exists)
+            {
+                // Empty the directory
+                var files = di.GetFiles();
+                foreach(var file in files)
+                {
+                    file.Delete();
+                }
+                loadedFilePaths.Clear();
+            }
+            else
+            {
+                // Create the directory
+                di.Create();
+            }
+
             foreach (var file in e.GetMultipleFiles())
             {
                 try
@@ -67,7 +86,7 @@
             DirectoryInfo di = new DirectoryInfo(outputPath);
             if (di.Exists)
             {
-                // Delete every file in that directory
+                // Empty the directory
                 var files = di.GetFiles();
                 foreach(var file in files)
                 {
@@ -76,7 +95,7 @@
             }
             else
             {
-                // Create the output directory
+                // Create the directory
                 di.Create();
             }
 
