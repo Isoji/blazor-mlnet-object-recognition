@@ -8,7 +8,6 @@
 <body class="text-center">
         <img class="text-center" src="MLNET_logo.png" alt="" width="250">
         <h1 class="h3 mb-3 font-weight-normal text-center">Upload a Netwatch Image Sequence</h1><br/>
-
         <div>
             <InputFile class="mb-3 form-control-file" name="file" accept="image/png, image/jpg, image/jpeg" id="inputfile" type="file" OnChange="@LoadFiles" multiple/>
         </div>
@@ -16,7 +15,7 @@
             <button class="btn btn-primary btn-lg w-100" @onclick="HandleDetection">Detect</button>
         </div>
         @if (doneLoading == true)
-    {
+        {
         <span><img id="image0" />Output 1</span>
         <span><img id="image1" />Output 2</span>
         <span><img id="image2" />Output 3</span>
@@ -25,16 +24,14 @@
 
 @code{
     private List<string> loadedFilePaths = new();
-    //private bool isLoading;
+    private string currPath = Directory.GetCurrentDirectory();
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
-        //isLoading = true;
         if (e.FileCount != 3)
         {
             Debug.WriteLine("exactly 3 files are required.");
             loadedFilePaths.Clear();
-            //isLoading = false;
         }
         // File count is equal to 3
         else
@@ -44,7 +41,6 @@
             {
                 try
                 {
-                    //var trustedFileNameForFileStorage = Path.GetRandomFileName();
                     var path = Path.Combine(Environment.ContentRootPath, "wwwroot/uploads",
                             file.Name);
                     loadedFilePaths.Add(path);
@@ -58,34 +54,54 @@
                         file.Name, ex.Message);
                 }
             }
-            //isLoading = false;
         }
     }
 
     bool doneLoading; // variable acting as a tracker to know when to display images on the index page
     private async void HandleDetection()
     {
-
         if (loadedFilePaths.Count == 3)
         {
+            // Sets the target output directory path
+            String outputPath = @$"{currPath}\wwwroot\outputs";
+            DirectoryInfo di = new DirectoryInfo(outputPath);
+            if (di.Exists)
+            {
+                // Delete every file in that directory
+                var files = di.GetFiles();
+                foreach(var file in files)
+                {
+                    file.Delete();
+                }
+            }
+            else
+            {
+                // Create the output directory
+                di.Create();
+            }
+
             // Initialize the detection model
             ObjectRecogntionWebApp.Model.FasterRCNN detector = new Model.FasterRCNN();
 
-            int index = 0;
+            int index = 0; // Index counter to use in the output file names
+
+            // Perform detection on each of the 3 files that were uploaded
             foreach (var filePath in loadedFilePaths)
             {
                 index++;
                 var output = detector.DetectObjects(filePath, new HashSet<string>{"person"}, 0.5f);
 
-                output.SaveAsJpeg("C:/Users/tremb/source/repos/ObjectRecogntionWebApp/ObjectRecogntionWebApp/wwwroot/outputs/output_"+ index +".jpg");
+                // Save output in the output path
+                output.SaveAsJpeg(@$"{outputPath}\output_{index}.jpg");
             }
+            // Clear the list containing the uploaded file paths
             loadedFilePaths.Clear();
             doneLoading = true;
         }
         else
         {
+            // Alert message if the attempted number of files uploaded is not equal to 3
             await JsRuntime.InvokeVoidAsync("alert", "You must upload 3 images.");
         }
-        // Load Results component here with passed outputStreams List as parameter
     }
 }
