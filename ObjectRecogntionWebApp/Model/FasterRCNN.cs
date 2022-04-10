@@ -75,13 +75,24 @@ namespace ObjectRecogntionWebApp.Model
         /// <returns></returns>
         public Image DrawDetections(Image image, List<Detection> detections)
         {
-            //using var output = File.OpenWrite("C:/Users/tremb/source/repos/ObjectRecogntionWebApp/ObjectRecogntionWebApp/wwwroot/outputs/" + outputName);
+            // Set the font for text to be drawn on image
             Font font = SystemFonts.CreateFont("Arial", 16);
+
+            // Get the ratio for resizing boxes to original image
+            float ratio = 800f / Math.Min(image.Width, image.Height);
 
             foreach (var d in detections) 
             {
+                // Resize the bounding box
+                d.Box.Xmin /= ratio;
+                d.Box.Ymin /= ratio;
+                d.Box.Ymax /= ratio;
+                d.Box.Xmax /= ratio;
+
+                // Apply transformations to image
                 image.Mutate(x =>
                 {
+                    // Draw bounding box over the image
                     x.DrawLines(Color.Red, 2f, new PointF[]
                     {
                         new PointF(d.Box.Xmin, d.Box.Ymin),
@@ -96,10 +107,10 @@ namespace ObjectRecogntionWebApp.Model
                         new PointF(d.Box.Xmin, d.Box.Ymax),
                         new PointF(d.Box.Xmin, d.Box.Ymin)
                     }); 
+                    // Draw the class label and accuracy score over the image
                     x.DrawText($"{d.Label}, {d.Score:0.00}", font, Color.Red, new PointF(d.Box.Xmin, d.Box.Ymin));
                 });
             }
-            //image.SaveAsJpeg(output);
             return image;
         }
 
