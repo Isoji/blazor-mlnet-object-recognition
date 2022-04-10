@@ -10,32 +10,36 @@
         <h1 class="h3 mb-3 font-weight-normal text-center">Upload a Netwatch Image Sequence</h1><br/>
 
         <div>
-            <InputFile class="mb-3 form-control-file" name="file" accept="image/png, image/jpg, image/jpeg" id="inputfile" type="file"  OnChange="@LoadFiles" multiple/>
+            <InputFile class="mb-3 form-control-file" name="file" accept="image/png, image/jpg, image/jpeg" id="inputfile" type="file" OnChange="@LoadFiles" multiple/>
         </div>
         <div>
             <button class="btn btn-primary btn-lg w-100" @onclick="HandleDetection">Detect</button>
         </div>
-    @if (isLoading)
+        @if (doneLoading == true)
     {
-        <p>Uploading...</p>
-    }
+        <span><img id="image0" />Output 1</span>
+        <span><img id="image1" />Output 2</span>
+        <span><img id="image2" />Output 3</span>
+        }
 </body>
 
 @code{
     private List<string> loadedFilePaths = new();
-    private bool isLoading;
+    //private bool isLoading;
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
-        isLoading = true;
+        //isLoading = true;
         if (e.FileCount != 3)
         {
             Debug.WriteLine("exactly 3 files are required.");
             loadedFilePaths.Clear();
-            isLoading = false;
+            //isLoading = false;
         }
+        // File count is equal to 3
         else
         {
+            // For each file uploaded, convert them into a file stream
             foreach (var file in e.GetMultipleFiles())
             {
                 try
@@ -54,31 +58,33 @@
                         file.Name, ex.Message);
                 }
             }
-            isLoading = false;
+            //isLoading = false;
         }
     }
 
+    bool doneLoading; // variable acting as a tracker to know when to display images on the index page
     private async void HandleDetection()
     {
-        List<MemoryStream> outputImages = new();
 
         if (loadedFilePaths.Count == 3)
         {
+            // Initialize the detection model
             ObjectRecogntionWebApp.Model.FasterRCNN detector = new Model.FasterRCNN();
 
+            int index = 0;
             foreach (var filePath in loadedFilePaths)
             {
-                var result = detector.DetectObjects(filePath, new HashSet<string>{"person"}, 0.7f);
-                //outputs.Add(result);
+                index++;
+                var output = detector.DetectObjects(filePath, new HashSet<string>{"person"}, 0.5f);
 
-                var tmp = new MemoryStream();
-                result.SaveAsJpeg(tmp);
-                outputImages.Add(tmp);
+                output.SaveAsJpeg("C:/Users/tremb/source/repos/ObjectRecogntionWebApp/ObjectRecogntionWebApp/wwwroot/outputs/output_"+ index +".jpg");
             }
+            doneLoading = true;
         }
         else
         {
             await JsRuntime.InvokeVoidAsync("alert", "You must upload 3 images.");
         }
+        // Load Results component here with passed outputStreams List as parameter
     }
 }
