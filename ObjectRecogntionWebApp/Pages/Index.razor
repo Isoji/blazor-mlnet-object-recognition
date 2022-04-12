@@ -3,6 +3,7 @@
 @inject IWebHostEnvironment Environment
 @inject ILogger<Index> Logger
 @inject IJSRuntime JsRuntime;
+@inject NavigationManager NavigationManager
 
 <PageTitle>Index</PageTitle>
 <body class="text-center">
@@ -14,12 +15,6 @@
         <div>
             <button class="btn btn-primary btn-lg w-100" @onclick="HandleDetection">Detect</button>
         </div>
-        @if (doneLoading == true)
-        {
-        <span><img src="outputs\output_1.jpg"/></span>
-        <span><img src="outputs\output_2.jpg"></span>
-        <span><img src="outputs\output_3.jpg"/></span>
-        }
 </body>
 
 @code{
@@ -121,6 +116,7 @@
             // Clear the list containing the uploaded file paths
             loadedFilePaths.Clear();
             doneLoading = true;
+            NavigationManager.NavigateTo("results");
         }
         else
         {
