@@ -102,16 +102,21 @@
             // Initialize the detection model
             ObjectRecogntionWebApp.Model.FasterRCNN detector = new Model.FasterRCNN();
 
-            int index = 0; // Index counter to use in the output file names
+            // Index counter to use in the output file names
+            int index = 0;
+            int nbOfDetections = 0;
 
             // Perform detection on each of the 3 files that were uploaded
             foreach (var filePath in loadedFilePaths)
             {
                 index++;
-                var output = detector.DetectObjects(filePath, new HashSet<string>{"person"}, 0.5f);
+                var detections = detector.DetectObjects(filePath, new HashSet<string>{"person"}, 0.5f);
+                nbOfDetections += detections.Count();
 
-                // Save output in the output path
-                output.SaveAsJpeg(@$"{outputPath}\output_{index}.jpg");
+                // Get image output
+                Image imageOutput = detector.DrawDetections(filePath, detections);
+                // Save image output to the output path
+                imageOutput.SaveAsJpeg(@$"{outputPath}\output_{index}.jpg");
             }
             // Clear the list containing the uploaded file paths
             loadedFilePaths.Clear();

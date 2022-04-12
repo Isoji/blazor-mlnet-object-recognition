@@ -29,7 +29,7 @@ namespace ObjectRecogntionWebApp.Model
             // Load image from path
             Image<Bgr24> image = Image.Load<Bgr24>(imagePath);
 
-            // Setup input
+            // Setup input                                                                                                                                                                                                                                    
             var input = new List<NamedOnnxValue>
             {
                 NamedOnnxValue.CreateFromTensor("image", PreProcessImage(image))
