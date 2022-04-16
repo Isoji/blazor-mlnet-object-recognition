@@ -69,3 +69,43 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+.config-name {
+    font-weight: bold;
+}
+
+.config-body {
+    height: auto;
+    width: 50%;
+    background-color: lightgray;
+    border-radius: 5px;
+    margin-right: auto;
+    margin-top: 30px;
+}
+.config-row {
+    border-top: solid;
+    border-left: solid;
+    border-right: solid;
+    border-width: 2px;
+}
+.config-row.first {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.config-row.last {
+    border-bottom: solid;
+    border-width: 2px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.config-row-content {
+    padding: 10px 20px 30px 20px;
+}
+.config-input {
+    float: right;
+}
+
+#checkbox {
+    margin-left: 10px;
+    margin-right: 5px;
+}

@@ -2,18 +2,25 @@
 
 <PageTitle>Configuration</PageTitle>
 
-<h3 style="text-align:center">Object Detection Configuration</h3>
+<h3><b>Object Detection Configuration</b></h3>
 
-<div class="config">
-	<div>
-		<label><b>Classes:</b></label>
-		<input type="checkbox" />Person
-		<input type="checkbox" />Car
+<div class="config-body">
+	<div class="config-row first">
+		<div class="config-row-content">
+			<label class="config-name">Classes</label>
+			<span class="config-input">
+				<input id="checkbox" type="checkbox" />Person
+				<input id="checkbox" type="checkbox" />Car
+			</span>
+		</div>
 	</div>
-	<div>
-		<label>Accuracy Threshold:</label>
-		<div class="slidecontainer">
-		  <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+	<div class="config-row last">
+		<div class="config-row-content">
+			<label class="config-name">Detection Threshold</label>
+			<span class="config-input">
+				<input type="range" id="rangeInput" min="1" max="100" value="50" oninput="rangeValue.value=rangeInput.value">
+				<output id="rangeValue" for="rangeInput">50</output>
+			</span>
 		</div>
 	</div>
 </div>
