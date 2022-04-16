@@ -105,7 +105,7 @@
             foreach (var filePath in loadedFilePaths)
             {
                 index++;
-                var detections = detector.DetectObjects(filePath, new HashSet<string>{"person"}, 0.5f);
+                var detections = detector.DetectObjects(filePath, new HashSet<string>{"person"});
                 nbOfDetections += detections.Count();
 
                 // Get image output

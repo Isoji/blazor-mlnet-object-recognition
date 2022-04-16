@@ -11,6 +11,7 @@ namespace ObjectRecogntionWebApp.Model
     public class FasterRCNN : IDetector
     {
         readonly InferenceSession Session;
+        public float Threshold { get; set; } = 0.7f;
 
         public FasterRCNN()
         {
@@ -24,7 +25,7 @@ namespace ObjectRecogntionWebApp.Model
         /// <param name="classes">The HashSet containing class labels for detection filtering.</param>
         /// <param name="threshold">The score threshold used for detection filtering.</param>
         /// <returns>The output Image</returns>
-        public List<Detection> DetectObjects(string imagePath, HashSet<string> classes, float threshold)
+        public List<Detection> DetectObjects(string imagePath, HashSet<string> classes)
         {
             // Load image from path
             Image<Bgr24> image = Image.Load<Bgr24>(imagePath);
@@ -44,7 +45,7 @@ namespace ObjectRecogntionWebApp.Model
             long[] labels = resultsArray[1].AsEnumerable<long>().ToArray();
             float[] scores = resultsArray[2].AsEnumerable<float>().ToArray();
             var detections = new List<Detection>();
-            var minScore = threshold;
+            var minScore = Threshold;
 
             // Iterating by 4 because every box has 4 sequenced float values (xmin, ymin, xmax, ymax)
             for (int i = 0; i < boxes.Length - 4; i += 4)
