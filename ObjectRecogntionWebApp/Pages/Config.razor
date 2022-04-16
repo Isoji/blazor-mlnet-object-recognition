@@ -2,7 +2,21 @@
 
 <PageTitle>Configuration</PageTitle>
 
-<h3>Object Detection Configuration</h3>
+<h3 style="text-align:center">Object Detection Configuration</h3>
+
+<div class="config">
+	<div>
+		<label><b>Classes:</b></label>
+		<input type="checkbox" />Person
+		<input type="checkbox" />Car
+	</div>
+	<div>
+		<label>Accuracy Threshold:</label>
+		<div class="slidecontainer">
+		  <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+		</div>
+	</div>
+</div>
 
 @code {
 
