@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using ObjectRecogntionWebApp.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseWebRoot("wwwroot").UseStaticWebAssets(); // fixes CSS isolation issue
@@ -7,6 +6,7 @@ builder.WebHost.UseWebRoot("wwwroot").UseStaticWebAssets(); // fixes CSS isolati
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddSingleton<AppState>();
 
 var app = builder.Build();
 
