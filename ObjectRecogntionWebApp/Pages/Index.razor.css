@@ -1,0 +1,13 @@
+﻿.home-container {
+    text-align: center;
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+    min-width: 50%;
+    max-width: 100%;
+}
+
+#detect-btn {
+    width: 100%;
+}

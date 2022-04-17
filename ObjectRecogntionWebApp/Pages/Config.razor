@@ -2,38 +2,40 @@
 
 <PageTitle>Configuration</PageTitle>
 
-<h3><b>Object Detection Configuration</b></h3>
-<div class="config-container">
-	<div class="config-row first">
-		<div class="config-row-content">
-			<label class="config-name">Detector</label>
-			<span class="config-input">
-				<input id="checkbox" type="radio" />Faster RCNN
-			</span>
+<body>
+	<h3>Object Detection Configuration</h3>
+	<div class="config-container">
+		<div class="config-row first">
+			<div class="config-row-content">
+				<label class="config-name">Detector</label>
+				<span class="config-input">
+					<input id="checkbox" type="radio" />Faster RCNN
+				</span>
+			</div>
+		</div>
+		<div class="config-row">
+			<div class="config-row-content">
+				<label class="config-name">Classes</label>
+				<span class="config-input">
+					<input id="checkbox" type="checkbox" />Person
+					<input id="checkbox" type="checkbox" />Car
+				</span>
+			</div>
+		</div>
+		<div class="config-row last">
+			<div class="config-row-content">
+				<label class="config-name">Detection Threshold</label>
+				<span class="config-input">
+					<input type="range" id="rangeInput" min="1" max="100" value="50" oninput="rangeValue.value=rangeInput.value">
+					<output id="rangeValue" for="rangeInput">50</output>
+				</span>
+			</div>
+		</div>
+		<div>
+			<input id="apply-btn" type="button" value="Apply"/>
 		</div>
 	</div>
-	<div class="config-row">
-		<div class="config-row-content">
-			<label class="config-name">Classes</label>
-			<span class="config-input">
-				<input id="checkbox" type="checkbox" />Person
-				<input id="checkbox" type="checkbox" />Car
-			</span>
-		</div>
-	</div>
-	<div class="config-row last">
-		<div class="config-row-content">
-			<label class="config-name">Detection Threshold</label>
-			<span class="config-input">
-				<input type="range" id="rangeInput" min="1" max="100" value="50" oninput="rangeValue.value=rangeInput.value">
-				<output id="rangeValue" for="rangeInput">50</output>
-			</span>
-		</div>
-	</div>
-	<div>
-		<input id="apply-btn" type="button" value="Apply"/>
-	</div>
-</div>
+</body>
 
 @code {
 	
