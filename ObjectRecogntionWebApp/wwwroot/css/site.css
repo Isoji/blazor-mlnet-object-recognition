@@ -18,11 +18,17 @@ a, .btn-link {
     border-color: #1861ac;
 }
 
-.form-index {
+.home-container {
     width: 100%;
     max-width: 330px;
     padding: 15px;
     margin: auto;
+    min-width: 50%;
+    max-width: 100%;
+}
+
+#detect-btn {
+    width:100%;
 }
 
 .content {
@@ -74,7 +80,7 @@ a, .btn-link {
     font-weight: bold;
 }
 
-.config-body {
+.config-container {
     background-color: #ebebeb;
     border-radius: 5px;
     margin-right: auto;
@@ -124,9 +130,11 @@ a, .btn-link {
     float: right;
     border-radius: 5px;
     width: 15%;
+    background-color: #0075FF;
+    color: white;
 }
 
     #apply-btn:hover {
-        background-color: #0075FF;
-        color: white;
+        background-color: rgb(0,50,150);
+        color: lightgray;
     }
