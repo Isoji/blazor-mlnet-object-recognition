@@ -1,7 +1,6 @@
 ﻿@page "/config"
 
 <PageTitle>Configuration</PageTitle>
-
 <body>
 	<h3>Object Detection Configuration</h3>
 	<div class="config-container">
@@ -17,8 +16,8 @@
 			<div class="config-row-content">
 				<label class="config-name">Classes</label>
 				<span class="config-input">
-					<input id="checkbox" type="checkbox" />Person
-					<input id="checkbox" type="checkbox" />Car
+					<input id="checkbox" type="checkbox" checked/>Person
+					<input id="checkbox" type="checkbox" checked/>Car
 				</span>
 			</div>
 		</div>
@@ -26,8 +25,7 @@
 			<div class="config-row-content">
 				<label class="config-name">Detection Threshold</label>
 				<span class="config-input">
-					<input type="range" id="rangeInput" min="1" max="100" value="50" oninput="rangeValue.value=rangeInput.value">
-					<output id="rangeValue" for="rangeInput">50</output>
+					<input type="range" id="rangeInput" min="1" max="100" @bind="Threshold" @bind:event="oninput"/>@Threshold
 				</span>
 			</div>
 		</div>
@@ -38,5 +36,5 @@
 </body>
 
 @code {
-	
+	private int Threshold { get; set; } = 70;
 }
