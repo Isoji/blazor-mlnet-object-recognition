@@ -9,12 +9,14 @@
 <PageTitle>Index</PageTitle>
 <body>
     <div class="container">
-        <img id="logo" src="mlnet_logo.png" alt="" width="250">
-        <h1 class="h3 mb-3 font-weight-normal text-center">Upload a Netwatch Image Sequence</h1><br/>
-        <div>
-            <InputFile class="mb-3 form-control-file" name="file" accept="image/png, image/jpg, image/jpeg" id="inputfile" type="file" OnChange="@LoadFiles" multiple/>
+        <div class="centered">
+            <img id="logo" src="mlnet_logo.png" alt="" width="250">
+            <h1 class="h3 mb-3 font-weight-normal text-center">Upload a Netwatch Image Sequence</h1><br/>
+            <div>
+                <InputFile class="mb-3 form-control-file" name="file" accept="image/png, image/jpg, image/jpeg" id="inputfile" type="file" OnChange="@LoadFiles" multiple/>
+            </div>
+            <button class="btn btn-primary btn-lg detect-btn" @onclick="HandleDetection">Detect</button>
         </div>
-        <button class="btn btn-primary btn-lg w-50 detect-btn" @onclick="HandleDetection">Detect</button>
     </div>
 </body>
 

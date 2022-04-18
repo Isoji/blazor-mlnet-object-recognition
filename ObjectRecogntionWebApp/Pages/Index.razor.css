@@ -1,11 +1,7 @@
 ﻿.container {
+    position: relative;
     text-align: center;
-    width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: auto;
-    min-width: 50%;
-    max-width: 100%;
+    margin-top: 80px;
 }
 
 #logo {
@@ -15,4 +11,6 @@
 
 .detect-btn {
     margin-top: 30px;
+    min-width: 200px;
+    width: 25%;
 }
