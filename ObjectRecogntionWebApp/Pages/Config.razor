@@ -43,28 +43,29 @@
 			<div class="config-row-content">
 				<label class="config-name">Detection Threshold</label>
 				<span class="config-input">
-					<input type="range" id="rangeInput" min="1" max="100" @bind="Threshold" @bind:event="oninput"/>@Threshold
+					<input type="range" id="rangeInput" min="1" max="100" @bind="threshold" @bind:event="oninput"/>@threshold
 				</span>
 			</div>
 		</div>
 		<div>
 			<input id="apply-btn" type="button" value="Apply"/>
 		</div>
-		@{
-			foreach(var e in classes)
-			{
-				@e<br />
-			}
-		}
 	</div>
+	@{
+		foreach(var e in classes)
+		{
+			@e<br />
+		}
+	}
 </body>
 
 @code {
-	private int Threshold { get; set; } = 70;
-	private HashSet<string> classes;
-
+	private HashSet<string> classes = new HashSet<string>();
+	private int threshold;
+	
 	protected override void OnInitialized()
 	{
+		threshold = (int)(State.Threshold * 100); // Multiply by 100 to get the percentage value for slider range
 		classes = State.Classes;
 	}
 
