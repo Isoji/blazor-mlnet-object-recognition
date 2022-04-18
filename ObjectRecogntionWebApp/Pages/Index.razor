@@ -105,7 +105,7 @@
             foreach (var filePath in loadedFilePaths)
             {
                 index++;
-                var detections = State.Detector.DetectObjects(filePath, State.Classes);
+                var detections = State.Detector.DetectObjects(filePath, State.Classes, State.Threshold);
                 nbOfDetections += detections.Count();
                 // Get image output
                 Image imageOutput = State.Detector.DrawDetections(filePath, detections);

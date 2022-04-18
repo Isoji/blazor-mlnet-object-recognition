@@ -4,6 +4,6 @@ namespace ObjectRecogntionWebApp.Model
 {
     public interface IDetector 
     {
-        public List<Detection> DetectObjects(string imageUrl, HashSet<string> labels);
+        public List<Detection> DetectObjects(string imageUrl, HashSet<string> labels, float threshold);
     }
 }

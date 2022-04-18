@@ -17,7 +17,6 @@
     <PackageReference Include="Microsoft.ML.OnnxRuntime.Gpu" Version="1.11.0" />
     <PackageReference Include="SixLabors.Fonts" Version="1.0.0-beta16" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta14" />
-    <PackageReference Include="Syncfusion.Blazor.Inputs" Version="20.1.0.48" />
   </ItemGroup>
 
 </Project>
