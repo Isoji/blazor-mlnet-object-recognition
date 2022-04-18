@@ -1,4 +1,5 @@
 ﻿@page "/config"
+@inject AppState State
 
 <PageTitle>Configuration</PageTitle>
 <body>
@@ -16,8 +17,25 @@
 			<div class="config-row-content">
 				<label class="config-name">Classes</label>
 				<span class="config-input">
-					<input id="checkbox" type="checkbox" checked/>Person
-					<input id="checkbox" type="checkbox" checked/>Car
+					@{
+						if (State.Classes.Contains("person")){
+							<input id="checkbox" type="checkbox" checked @onchange="@(e => ClassCheckboxHandler("person", e.Value))"/>
+						}
+						else
+						{
+							<input id="checkbox" type="checkbox" @onchange="@(e => ClassCheckboxHandler("person", e.Value))"/>
+						}
+						<label>Person</label>
+
+						if (State.Classes.Contains("car")){
+							<input id="checkbox" type="checkbox" checked @onchange="@(e => ClassCheckboxHandler("car", e.Value))"/>
+						}
+						else
+						{
+							<input id="checkbox" type="checkbox" @onchange="@(e => ClassCheckboxHandler("car", e.Value))"/>
+						}
+						<label>Car</label>
+					}
 				</span>
 			</div>
 		</div>
@@ -32,9 +50,39 @@
 		<div>
 			<input id="apply-btn" type="button" value="Apply"/>
 		</div>
+		@{
+			foreach(var e in classes)
+			{
+				@e<br />
+			}
+		}
 	</div>
 </body>
 
 @code {
 	private int Threshold { get; set; } = 70;
+	private HashSet<string> classes;
+
+	protected override void OnInitialized()
+	{
+		classes = State.Classes;
+	}
+
+	private void ClassCheckboxHandler(string className, object checkedValue)
+	{
+		if((bool)checkedValue == true)
+		{
+			if (!classes.Contains(className))
+			{
+				classes.Add(className);
+			}
+		}
+		else
+		{
+			if (classes.Contains(className))
+			{
+				classes.Remove(className);
+			}
+		}
+	}
 }
