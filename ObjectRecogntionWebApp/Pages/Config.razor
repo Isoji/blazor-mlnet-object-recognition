@@ -48,7 +48,7 @@
 			</div>
 		</div>
 		<div>
-			<input id="apply-btn" type="button" value="Apply"/>
+			<input id="apply-btn" type="button" value="Apply" @onclick="ApplyConfig"/>
 		</div>
 	</div>
 	@{
@@ -62,7 +62,7 @@
 @code {
 	private HashSet<string> classes = new HashSet<string>();
 	private int threshold;
-	
+
 	protected override void OnInitialized()
 	{
 		threshold = (int)(State.Threshold * 100); // Multiply by 100 to get the percentage value for slider range
@@ -85,5 +85,11 @@
 				classes.Remove(className);
 			}
 		}
+	}
+
+	private void ApplyConfig()
+	{
+		State.Classes = classes;
+		State.Threshold = ((float)threshold / 100);
 	}
 }
