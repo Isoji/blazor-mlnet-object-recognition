@@ -6,7 +6,7 @@
 @inject NavigationManager NavigationManager
 @inject AppState State
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Home</PageTitle>
 <body>
     <div class="container">
         <div class="centered">
@@ -115,7 +115,7 @@
             // Clear the list containing the uploaded file paths
             loadedFilePaths.Clear();
             doneLoading = true;
-            NavigationManager.NavigateTo("results", true);
+            NavigationManager.NavigateTo("results/" + nbOfDetections, true);
         }
         else
         {

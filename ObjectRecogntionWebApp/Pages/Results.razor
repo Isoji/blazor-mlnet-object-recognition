@@ -1,4 +1,4 @@
-﻿@page "/results"
+﻿@page "/results/{DetectionCount:int}"
 
 <PageTitle>Results</PageTitle>
 <body>
@@ -7,9 +7,32 @@
 		<span><img id="image-output" src="outputs\output_1.jpg" /></span>
 		<span><img id="image-output" src="outputs\output_2.jpg" /></span>
 		<span><img id="image-output" src="outputs\output_3.jpg" /></span>
+		<div>
+			<div>
+				<label>Total Detections: </label>@DetectionCount
+			</div>
+			<div>
+				<label>Activity: </label>@IsActivity
+			</div>
+		</div>
 	</div>
 </body>
 
 @code {
+	[Parameter]
+	public int? DetectionCount { get; set; }
 
+	bool IsActivity { get; set; }
+
+	protected override void OnInitialized()
+	{
+		if(DetectionCount >= 1)
+		{
+			IsActivity = true;
+		}
+		else
+		{
+			IsActivity = false;
+		}
+	}
 }
