@@ -3,60 +3,54 @@
 
 <PageTitle>Configuration</PageTitle>
 <body>
-	<h3>Object Detection Configuration</h3>
-	<div class="config-container">
-		<div class="config-row first">
-			<div class="config-row-content">
-				<label class="config-name">Detector</label>
-				<span class="config-input">
-					<input id="checkbox" type="radio" />Faster RCNN
-				</span>
+	<div class="container">
+		<h3>Object Detection Configuration</h3>
+		<div class="config-container">
+			<div class="config-row first">
+				<div class="config-row-content">
+					<label class="config-name">Detector</label>
+					<span class="config-input">
+						<input id="checkbox" type="radio" />Faster RCNN
+					</span>
+				</div>
 			</div>
-		</div>
-		<div class="config-row">
-			<div class="config-row-content">
-				<label class="config-name">Classes</label>
-				<span class="config-input">
-					@{
-						if (State.Classes.Contains("person")){
-							<input id="checkbox" type="checkbox" checked @onchange="@(e => ClassCheckboxHandler("person", e.Value))"/>
-						}
-						else
-						{
-							<input id="checkbox" type="checkbox" @onchange="@(e => ClassCheckboxHandler("person", e.Value))"/>
-						}
-						<label>Person</label>
+			<div class="config-row">
+				<div class="config-row-content">
+					<label class="config-name">Classes</label>
+					<span class="config-input">
+						@{
+							if (State.Classes.Contains("person")){
+								<input id="checkbox" type="checkbox" checked @onchange="@(e => ClassCheckboxHandler("person", e.Value))"/>
+							}
+							else
+							{
+								<input id="checkbox" type="checkbox" @onchange="@(e => ClassCheckboxHandler("person", e.Value))"/>
+							}
+							<label>Person</label>
 
-						if (State.Classes.Contains("car")){
-							<input id="checkbox" type="checkbox" checked @onchange="@(e => ClassCheckboxHandler("car", e.Value))"/>
+							if (State.Classes.Contains("car")){
+								<input id="checkbox" type="checkbox" checked @onchange="@(e => ClassCheckboxHandler("car", e.Value))"/>
+							}
+							else
+							{
+								<input id="checkbox" type="checkbox" @onchange="@(e => ClassCheckboxHandler("car", e.Value))"/>
+							}
+							<label>Car</label>
 						}
-						else
-						{
-							<input id="checkbox" type="checkbox" @onchange="@(e => ClassCheckboxHandler("car", e.Value))"/>
-						}
-						<label>Car</label>
-					}
-				</span>
+					</span>
+				</div>
+			</div>
+			<div class="config-row last">
+				<div class="config-row-content">
+					<label class="config-name">Detection Threshold</label>
+					<span class="config-input">
+						<input type="range" id="rangeInput" min="1" max="100" @bind="threshold" @bind:event="oninput"/>@threshold
+					</span>
+				</div>
 			</div>
 		</div>
-		<div class="config-row last">
-			<div class="config-row-content">
-				<label class="config-name">Detection Threshold</label>
-				<span class="config-input">
-					<input type="range" id="rangeInput" min="1" max="100" @bind="threshold" @bind:event="oninput"/>@threshold
-				</span>
-			</div>
-		</div>
-		<div>
-			<input id="apply-btn" type="button" value="Apply" @onclick="ApplyConfig"/>
-		</div>
+		<button class="btn btn-primary apply-btn" @onclick="ApplyConfig">Apply</button>
 	</div>
-	@{
-		foreach(var e in classes)
-		{
-			@e<br />
-		}
-	}
 </body>
 
 @code {
@@ -90,6 +84,6 @@
 	private void ApplyConfig()
 	{
 		State.Classes = classes;
-		State.Threshold = ((float)threshold / 100);
+		State.Threshold = ((float)threshold / 100); // Divide by 100 to convert value into correct threshold float format
 	}
 }
