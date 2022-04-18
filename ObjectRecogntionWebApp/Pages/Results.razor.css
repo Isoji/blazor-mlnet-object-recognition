@@ -1,0 +1,13 @@
+﻿h3{
+    margin-bottom: 15px;
+}
+
+.container {
+    text-align: center;
+}
+
+#image-output {
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-bottom: 2px;
+}

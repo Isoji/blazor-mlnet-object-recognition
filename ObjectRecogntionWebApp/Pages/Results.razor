@@ -1,11 +1,13 @@
 ﻿@page "/results"
 
 <PageTitle>Results</PageTitle>
-<body class="text-center">
-	<h3>Detection Results</h3>
-	<span><img src="outputs\output_1.jpg" /></span>
-	<span><img src="outputs\output_2.jpg" /></span>
-	<span><img src="outputs\output_3.jpg" /></span>
+<body>
+	<div class="container">
+		<h3>Detection Results</h3>
+		<span><img id="image-output" src="outputs\output_1.jpg" /></span>
+		<span><img id="image-output" src="outputs\output_2.jpg" /></span>
+		<span><img id="image-output" src="outputs\output_3.jpg" /></span>
+	</div>
 </body>
 
 @code {
