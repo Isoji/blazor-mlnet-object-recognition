@@ -8,6 +8,11 @@
     max-width: 100%;
 }
 
-#detect-btn {
-    width: 100%;
+#logo {
+    margin-top: -50px;
+    margin-bottom: -30px;
+}
+
+.detect-btn {
+    margin-top: 30px;
 }

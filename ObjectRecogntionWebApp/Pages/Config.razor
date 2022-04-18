@@ -10,7 +10,13 @@
 				<div class="config-row-content">
 					<label class="config-name">Detector</label>
 					<span class="config-input">
-						<input id="checkbox" type="radio" />Faster RCNN
+						@{
+							if(State.Detector is FasterRCNN)
+							{
+								<input id="checkbox" checked type="radio" />
+								<label>Faster RCNN</label>
+							}
+						}
 					</span>
 				</div>
 			</div>
