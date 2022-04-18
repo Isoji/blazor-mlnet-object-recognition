@@ -2,10 +2,9 @@
 {
     public class AppState
     {
-        private FasterRCNN Detector { get; set; }
-        private float Threshold { get; set; }
-        private bool DetectPerson { get; set; }
-        private bool DetectCar { get; set; }
-        private string TestString { get; set; }
+        // Default properties of the app
+        public FasterRCNN Detector { get; set; } = new FasterRCNN();
+        public float Threshold { get; set; } = 0.7f;
+        public HashSet<string> Classes { get; set; } = new HashSet<string>{"person", "car"};
     }
 }

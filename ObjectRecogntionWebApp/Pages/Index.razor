@@ -2,8 +2,9 @@
 @using System.Diagnostics
 @inject IWebHostEnvironment Environment
 @inject ILogger<Index> Logger
-@inject IJSRuntime JsRuntime;
+@inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
+@inject AppState State
 
 <PageTitle>Index</PageTitle>
 <body>
@@ -94,9 +95,6 @@
                 di.Create();
             }
 
-            // Initialize the detection model
-            ObjectRecogntionWebApp.Model.FasterRCNN detector = new Model.FasterRCNN();
-
             // Index counter to use in the output file names
             int index = 0;
             int nbOfDetections = 0;
@@ -105,11 +103,10 @@
             foreach (var filePath in loadedFilePaths)
             {
                 index++;
-                var detections = detector.DetectObjects(filePath, new HashSet<string>{"person"});
+                var detections = State.Detector.DetectObjects(filePath, State.Classes);
                 nbOfDetections += detections.Count();
-
                 // Get image output
-                Image imageOutput = detector.DrawDetections(filePath, detections);
+                Image imageOutput = State.Detector.DrawDetections(filePath, detections);
                 // Save image output to the output path
                 imageOutput.SaveAsJpeg(@$"{outputPath}\output_{index}.jpg");
             }
