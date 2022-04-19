@@ -1,4 +1,5 @@
 using ObjectRecogntionWebApp.Model;
+using Blazored.Toast;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseWebRoot("wwwroot").UseStaticWebAssets(); // fixes CSS isolation issue
@@ -7,6 +8,7 @@ builder.WebHost.UseWebRoot("wwwroot").UseStaticWebAssets(); // fixes CSS isolati
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<AppState>();
+builder.Services.AddBlazoredToast();
 
 var app = builder.Build();
 

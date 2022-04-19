@@ -2,8 +2,17 @@
     margin-bottom: 15px;
 }
 
+label {
+    margin-right: 5px;
+}
+
 .container {
     text-align: center;
+}
+
+.results-info {
+    font-size: 20px;
+    margin-top: 50px;
 }
 
 #image-output {

@@ -1,5 +1,6 @@
 ﻿@page "/config"
 @inject AppState State
+@inject IToastService toastService
 
 <PageTitle>Configuration</PageTitle>
 <body>
@@ -91,5 +92,6 @@
 	{
 		State.Classes = classes;
 		State.Threshold = ((float)threshold / 100); // Divide by 100 to convert value into correct threshold float format
+		toastService.ShowSuccess("Saved!");
 	}
 }
