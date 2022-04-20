@@ -5,15 +5,19 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.Fonts;
+using SessionOptions = Microsoft.ML.OnnxRuntime.SessionOptions;
+using System.Diagnostics;
 
 namespace ObjectRecogntionWebApp.Model
 {
     public class FasterRCNN : IDetector
     {
-        readonly InferenceSession Session;
+        InferenceSession Session;
         public FasterRCNN()
         {
-            Session = new InferenceSession("C:/Users/tremb/source/repos/ObjectRecogntionWebApp/ObjectRecogntionWebApp/wwwroot/onnx/FasterRCNN-10.onnx");
+            SessionOptions options = new SessionOptions();
+            options.AppendExecutionProvider_CUDA(0);
+            Session = new InferenceSession("C:/Users/tremb/source/repos/ObjectRecogntionWebApp/ObjectRecogntionWebApp/wwwroot/onnx/FasterRCNN-10.onnx", options);
         }
 
         /// <summary>
@@ -35,7 +39,11 @@ namespace ObjectRecogntionWebApp.Model
             };
 
             // Run inference
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             var results = Session.Run(input);
+            sw.Stop();
+            Debug.WriteLine(sw.ElapsedMilliseconds);
 
             // Post process results
             var resultsArray = results.ToArray();
