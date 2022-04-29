@@ -1,5 +1,8 @@
 ﻿namespace ObjectRecogntionWebApp.Model
 {
+    /// <summary>
+    /// Class containing the labels of a pre-trained Faster R-CNN model
+    /// </summary>
     public class LabelMap
     {
         public static readonly string[] Labels = new[] {"__background",

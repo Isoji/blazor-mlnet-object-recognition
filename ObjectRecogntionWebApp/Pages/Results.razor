@@ -19,11 +19,15 @@
 </body>
 
 @code {
+	
+	// DetectionCount value that is received from the page route
 	[Parameter]
 	public int? DetectionCount { get; set; }
 
+	// Variable for displaying human activity as true or false
 	bool IsActivity { get; set; }
 
+	// Sets the IsActivity to true or false on page initialisation using the detection count parameter
 	protected override void OnInitialized()
 	{
 		if(DetectionCount >= 1)

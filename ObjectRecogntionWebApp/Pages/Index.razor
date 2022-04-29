@@ -24,11 +24,12 @@
     private List<string> loadedFilePaths = new();
     private string currPath = Directory.GetCurrentDirectory();
 
+    // Function that validates and stores the user uploaded files
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
         if (e.FileCount != 3)
         {
-            Debug.WriteLine("exactly 3 files are required.");
+            // Empty the loadedFilePaths List
             loadedFilePaths.Clear();
         }
         else
@@ -46,6 +47,7 @@
                 {
                     file.Delete();
                 }
+                // Empty the loadedFilePaths List
                 loadedFilePaths.Clear();
             }
             else
@@ -58,10 +60,11 @@
             {
                 try
                 {
-                    var path = Path.Combine(Environment.ContentRootPath, "wwwroot/uploads",
-                            file.Name);
+                    var path = Path.Combine(Environment.ContentRootPath, "wwwroot/uploads", file.Name);
+                    // Add the full image path to List
                     loadedFilePaths.Add(path);
 
+                    // Save the file
                     await using FileStream fs = new(path, FileMode.Create);
                     await file.OpenReadStream().CopyToAsync(fs);
                 }
@@ -74,7 +77,10 @@
         }
     }
 
-    bool doneLoading; // variable acting as a tracker to know when to display images on the index page
+    // Variable acting as a tracker to know when to display images on the index page
+    bool doneLoading;
+
+    // Function for performing detections on input data
     private async void HandleDetection()
     {
         if (loadedFilePaths.Count == 3)
@@ -99,15 +105,17 @@
 
             // Index counter to use in the output file names
             int index = 0;
+            // Number of detections to display on results page
             int nbOfDetections = 0;
-            float sequenceInferenceTime = 0;
+            //float sequenceInferenceTime = 0;
 
             // Perform detection on each of the 3 files that were uploaded
             foreach (var filePath in loadedFilePaths)
             {
                 index++;
-
+                // Get detections
                 var detections = State.Detector.DetectObjects(filePath, State.Classes, State.Threshold);
+                // Increment detection count
                 nbOfDetections += detections.Count();
                 // Get image output
                 Image imageOutput = State.Detector.DrawDetections(filePath, detections);
@@ -117,6 +125,7 @@
             // Clear the list containing the uploaded file paths
             loadedFilePaths.Clear();
             doneLoading = true;
+            // Redirect user to the results page with the route parameters
             NavigationManager.NavigateTo("results/" + nbOfDetections, true);
         }
         else

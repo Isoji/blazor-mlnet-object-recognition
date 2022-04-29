@@ -1,5 +1,8 @@
 ﻿namespace ObjectRecogntionWebApp.Model
 {
+    /// <summary>
+    /// Class for storing the configuration state of the application.
+    /// </summary>
     public class AppState
     {
         // Default properties of the app

@@ -10,9 +10,15 @@ using System.Diagnostics;
 
 namespace ObjectRecogntionWebApp.Model
 {
+    /// <summary>
+    /// Class for instantiating a Faster RCNN detector.
+    /// </summary>
     public class FasterRCNN : IDetector
     {
         InferenceSession Session;
+        /// <summary>
+        /// Class constructor that assigns an InferenceSession using the model path.
+        /// </summary>
         public FasterRCNN()
         {
             SessionOptions options = new SessionOptions();
@@ -21,12 +27,12 @@ namespace ObjectRecogntionWebApp.Model
         }
 
         /// <summary>
-        /// Performs object detection on an image.
+        /// Method that performs object detection on image input data.
         /// </summary>
-        /// <param name="path">The file path to the image.</param>
+        /// <param name="imagePath">The file path to the image.</param>
         /// <param name="classes">The HashSet containing class labels for detection filtering.</param>
         /// <param name="threshold">The score threshold used for detection filtering.</param>
-        /// <returns>The output Image</returns>
+        /// <returns>A list of detections.</returns>
         public List<Detection> DetectObjects(string imagePath, HashSet<string> classes, float threshold)
         {
             // Load image from path
@@ -75,10 +81,10 @@ namespace ObjectRecogntionWebApp.Model
         }
 
         /// <summary>
-        /// Uses detection data to draw over an image for output visualization
+        /// Methods that uses detection data to draw over an image for output visualization.
         /// </summary>
-        /// <param name="image">The image that went through detection</param>
-        /// <param name="detections">The detections that were inferred from the image</param>
+        /// <param name="imagePath">The original image that went through detection.</param>
+        /// <param name="detections">The detections that were inferred from the image.</param>
         /// <returns></returns>
         public Image DrawDetections(string imagePath, List<Detection> detections)
         {
@@ -125,10 +131,10 @@ namespace ObjectRecogntionWebApp.Model
         }
 
         /// <summary>
-        /// Pre processes an image into the proper format for inference with Faster RCNN models.
+        /// Method that pre processes an image into the proper format for inference with Faster RCNN models.
         /// </summary>
-        /// <param name="image">Image object to pre process</param>
-        /// <returns>Processed image tensor object</returns>
+        /// <param name="image">Image object to pre process.</param>
+        /// <returns>Processed image tensor object.</returns>
         private Tensor<float> PreProcessImage(Image<Bgr24> image)
         {
             var clonedImage = image.Clone();
@@ -163,7 +169,7 @@ namespace ObjectRecogntionWebApp.Model
     }
 
     /// <summary>
-    /// Stores the coordinates of a bounding box
+    /// Stores the coordinates of a bounding box.
     /// </summary>
     public class Box
     {
@@ -183,7 +189,7 @@ namespace ObjectRecogntionWebApp.Model
     }
 
     /// <summary>
-    /// Stores information about a detection
+    /// Stores data of a detection.
     /// </summary>
     public class Detection
     {
